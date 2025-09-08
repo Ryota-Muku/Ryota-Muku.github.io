@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AIQVE ONE - ゲームテスト自動化でクリエイティブな時間を創出</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Sans JP', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f8fafc;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 900;
+            color: #1e3a8a;
+        }
+
+        .nav {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav a {
+            text-decoration: none;
+            color: #374151;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav a:hover {
+            color: #1e3a8a;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #e0e7ff 0%, #fce7f3 50%, #ddd6fe 100%);
+            padding: 120px 0 80px;
+            margin-top: 70px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .hero-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-text h1 {
+            font-size: 3.5rem;
+            font-weight: 900;
+            color: #1e3a8a;
+            margin-bottom: 1.5rem;
+            line-height: 1.1;
+        }
+
+        .hero-text .highlight {
+            color: #ec4899;
+        }
+
+        .hero-subtitle {
+            font-size: 1.2rem;
+            color: #374151;
+            margin-bottom: 2.5rem;
+            line-height: 1.8;
+        }
+
+        .cta-button {
+            background: linear-gradient(135deg, #ec4899, #f97316);
+            color: white;
+            padding: 18px 40px;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s;
+            box-shadow: 0 8px 25px rgba(236, 72, 153, 0.3);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 35px rgba(236, 72, 153, 0.4);
+        }
+
+        .hero-image {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        .robot-placeholder {
+            width: 400px;
+            height: 400px;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.1));
+            border-radius: 50% 30% 50% 30%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            font-size: 6rem;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        /* Features Section */
+        .features {
+            padding: 100px 0;
+            background: #fff;
+        }
+
+        .features-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .features-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: #1e3a8a;
+            margin-bottom: 1rem;
+        }
+
+        .features-subtitle {
+            font-size: 1.3rem;
+            color: #374151;
+            font-weight: 500;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .feature-card {
+            background: #fff;
+            padding: 2.5rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+            border: 1px solid #f1f5f9;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.12);
+        }
+
+        .feature-icon {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, #ec4899, #f97316);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .feature-badge {
+            display: inline-block;
+            background: #fef3c7;
+            color: #f59e0b;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .feature-card h3 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #1e3a8a;
+            margin-bottom: 1rem;
+        }
+
+        .feature-card p {
+            color: #6b7280;
+            line-height: 1.6;
+        }
+
+        /* Case Studies Section */
+        .cases {
+            padding: 100px 0;
+            background: #f8fafc;
+        }
+
+        .cases-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .cases-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: #1e3a8a;
+            margin-bottom: 1rem;
+        }
+
+        .case-item {
+            background: #fff;
+            border-radius: 24px;
+            padding: 3rem;
+            margin-bottom: 3rem;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.05);
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .case-number {
+            display: inline-block;
+            background: linear-gradient(135deg, #06b6d4, #3b82f6);
+            color: white;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-size: 1rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+        }
+
+        .case-item:nth-child(even) .case-number {
+            background: linear-gradient(135deg, #ec4899, #f97316);
+        }
+
+        .case-content h3 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #1e3a8a;
+            margin-bottom: 1rem;
+        }
+
+        .case-tags {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .case-tag {
+            background: #dbeafe;
+            color: #1e3a8a;
+            padding: 4px 12px;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .case-benefits {
+            background: #f8fafc;
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin-top: 1.5rem;
+        }
+
+        .case-benefits h4 {
+            color: #1e3a8a;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            font-size: 1rem;
+        }
+
+        .case-benefits ul {
+            list-style: none;
+            color: #4b5563;
+        }
+
+        .case-benefits li {
+            padding: 0.3rem 0;
+            position: relative;
+            padding-left: 1.5rem;
+        }
+
+        .case-benefits li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #10b981;
+            font-weight: 700;
+        }
+
+        .case-illustration {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .illustration-placeholder {
+            width: 250px;
+            height: 200px;
+            background: linear-gradient(135deg, #e0e7ff, #fce7f3);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            border: 2px solid rgba(99, 102, 241, 0.1);
+        }
+
+        /* Contact Section */
+        .contact {
+            padding: 100px 0;
+            background: linear-gradient(135deg, #1e3a8a, #3730a3);
+            color: white;
+        }
+
+        .contact-content {
+            text-align: center;
+        }
+
+        .contact h2 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+        }
+
+        .contact p {
+            font-size: 1.2rem;
+            margin-bottom: 2.5rem;
+            opacity: 0.9;
+        }
+
+        .contact-form {
+            max-width: 600px;
+            margin: 0 auto;
+            display: grid;
+            gap: 1.5rem;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 15px 20px;
+            border: none;
+            border-radius: 12px;
+            font-size: 1rem;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            color: white;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .form-group input::placeholder,
+        .form-group textarea::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: rgba(255, 255, 255, 0.3);
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .submit-btn {
+            background: linear-gradient(135deg, #ec4899, #f97316);
+            color: white;
+            padding: 18px 40px;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 1rem;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 35px rgba(236, 72, 153, 0.4);
+        }
+
+        /* Footer */
+        .footer {
+            background: #111827;
+            color: #9ca3af;
+            padding: 40px 0;
+            text-align: center;
+        }
+
+        .footer p {
+            font-size: 0.9rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero-content,
+            .case-item {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+                text-align: center;
+            }
+
+            .hero-text h1 {
+                font-size: 2.5rem;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .nav {
+                display: none;
+            }
+
+            .robot-placeholder {
+                width: 300px;
+                height: 300px;
+                font-size: 4rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">AIQVE ONE</div>
+                <nav class="nav">
+                    <a href="#features">特徴</a>
+                    <a href="#cases">導入ケース</a>
+                    <a href="#contact">お問い合わせ</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="container">
+                <div class="hero-content">
+                    <div class="hero-text">
+                        <h1>ゲームテスト<span class="highlight">自動化</span>で<br>クリエイティブな時間を創出</h1>
+                        <p class="hero-subtitle">
+                            AI活用したテストを効率化するAIQVE ONEが<br>
+                            自動化コンサルから実装・運用までトータルサポート。<br>
+                            あらゆるゲームテスト（デバッグ）課題を解決します。
+                        </p>
+                        <a href="#contact" class="cta-button">無料で資料ダウンロード ▶</a>
+                    </div>
+                    <div class="hero-image">
+                        <div class="robot-placeholder">🤖</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="features" class="features">
+            <div class="container">
+                <div class="features-header">
+                    <h2 class="features-title">AIQVE ONEは高度な技術力で</h2>
+                    <p class="features-subtitle">開発チームの生産性を最大化します</p>
+                </div>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-badge">高度なAI技術</div>
+                        <div class="feature-icon">🧠</div>
+                        <h3>独自AIによる効率化</h3>
+                        <p>機械学習AI技術（深層学習・準教師付学習・強化学習）、LLM、自然言語学習などバックアップ学習技術で最大します。</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-badge">ご要望に応じて</div>
+                        <div class="feature-icon">📋</div>
+                        <h3>オーダーメイド実装</h3>
+                        <p>コストと効果のバランスの取れた効率的なワークフローと効率的な効果を実現できます。</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-badge">改善と検証により</div>
+                        <div class="feature-icon">🔗</div>
+                        <h3>継続的カスタマイズ化</h3>
+                        <p>プロジェクト内容の実施結果・改善・ワークフロー順によりの最適化リソースで実行します。</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-badge">一環した高質検証</div>
+                        <div class="feature-icon">✅</div>
+                        <h3>品質保証支援</h3>
+                        <p>LLM技術とフィードバックの活用により、実効性のあるレポート作成を行います。</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="cases" class="cases">
+            <div class="container">
+                <div class="cases-header">
+                    <h2 class="cases-title">導入ケース</h2>
+                    <p>ゲームテスト（デバッグ）自動化は、各現場の開発状況に合わせて重要な改善アプローチをご提案します。</p>
+                </div>
+
+                <div class="case-item">
+                    <div class="case-content">
+                        <div class="case-number">CASE 01</div>
+                        <h3>新規タイトル開発の<br>初期からフルで導入</h3>
+                        <div class="case-tags">
+                            <span class="case-tag">開発・マネジメント</span>
+                            <span class="case-tag">自動網羅性</span>
+                            <span class="case-tag">リリース後テスト</span>
+                            <span class="case-tag">リリース</span>
+                        </div>
+                        <p>新規タイトルの企画段階でき、初期の段階でのCADベースのゲームテスト（デバッグ）自動化により、大幅なコストと開発時間短縮を実現します。</p>
+                        <div class="case-benefits">
+                            <h4>活用メリット</h4>
+                            <ul>
+                                <li>設計段階から実装・タイトル内蔵によった編集、テスト設計理解を実現します。プロジェクト後半での手戻りが大幅に削減します。</li>
+                                <li>開発タイトルの初期化　CI/CDパイプラインテストを構築することにより実行期間を短縮します。</li>
+                                <li>運用コストの削減小伴　基本計画、ゲット測定に従った合わせでやることでコストを大幅削減できます。</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="case-illustration">
+                        <div class="illustration-placeholder">💻🎮</div>
+                    </div>
+                </div>
+
+                <div class="case-item">
+                    <div class="case-content">
+                        <div class="case-number">CASE 02</div>
+                        <h3>運用中のタイトルで段階的に導入</h3>
+                        <div class="case-tags">
+                            <span class="case-tag">運用</span>
+                            <span class="case-tag">アップデート</span>
+                        </div>
+                        <p>運用中のタイトルに対して着実な段階で、段階で導入することで、効率的な人的減員を促かすことができます。次編むアップデートの余裕を実現します。</p>
+                        <div class="case-benefits">
+                            <h4>活用メリット</h4>
+                            <ul>
+                                <li>段階的な効率性の実現　段階の実況案業定を決行して実現し、効果実感します。</li>
+                                <li>リスクは実行で理解できる　実行・自動例自体に実装することで・効率性とタイトル・を実感できます。</li>
+                                <li>ROIの自然実装　基本リリース、データストーリを確認に、実行効果を可能にできる集録できます。</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="case-illustration">
+                        <div class="illustration-placeholder">💡⚡</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact" class="contact">
+            <div class="container">
+                <div class="contact-content">
+                    <h2>まずは無料相談から</h2>
+                    <p>貴社のゲーム開発に最適なテスト自動化をご提案いたします</p>
+                    
+                    <form class="contact-form">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <input type="text" placeholder="会社名" required>
+                            </div>
+                            <div class="form-group">
+                                <input type="text" placeholder="お名前" required>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <input type="email" placeholder="メールアドレス" required>
+                            </div>
+                            <div class="form-group">
+                                <input type="tel" placeholder="電話番号">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <textarea placeholder="お問い合わせ内容をご記入ください" rows="5" required></textarea>
+                        </div>
+                        <button type="submit" class="submit-btn">無料相談を申し込む</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 AIQVE ONE. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>
